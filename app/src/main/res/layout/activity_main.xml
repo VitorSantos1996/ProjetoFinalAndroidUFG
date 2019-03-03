@@ -7,19 +7,21 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/sign_out_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="signout"
-        app:layout_constraintBottom_toTopOf="@id/delete_account_button"/>
-
-    <Button
         android:id="@+id/delete_account_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Delete My Account"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sign_out_button"/>
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <ListView
+        android:id="@+id/lvMain"
+        android:layout_width="368dp"
+        android:layout_height="576dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

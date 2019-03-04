@@ -10,6 +10,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,7 +19,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
 
 
 import com.firebase.ui.auth.AuthUI;
@@ -40,11 +41,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private FirebaseAuth firebaseAuth;
-    DatabaseReference dataBaseReference;
-    StorageReference storageReference;
-    
-    private List<Receita> listaReceitas = new ArrayList<Receita>();
-    ArrayAdapter<Receita> ArrayAdapterReceita;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,63 +50,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                cadastrarReceita(this);
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        inicializeFirebase();
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview_id);
+        RecyclerViewReceitaAdapter recyclerViewAdapter = new RecyclerViewReceitaAdapter(this, carregaLista());
 
-        listaDados();
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
+        recyclerView.setAdapter(recyclerViewAdapter);
 
         firebaseAuth = FirebaseAuth.getInstance();
-    }
 
-    private void cadastrarReceita(View.OnClickListener onClickListener) {
-
-    }
-
-    private void listaDados() {
-        dataBaseReference.child("Receitas").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                listaReceitas.clear();
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-                    Receita receita = dataSnapshot1.getValue(Receita.class);
-                    listaReceitas.add(receita);
-                }
-
-                ListView lista = (ListView) findViewById(R.id.lvMain);
-
-                ArrayAdapterReceita adapter = new ArrayAdapterReceita(MainActivity.this, listaReceitas);
-                lista.setAdapter(adapter);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private void inicializeFirebase() {
-        FirebaseApp.initializeApp(this);
-        dataBaseReference = FirebaseDatabase.getInstance().getReference();
-        storageReference = FirebaseStorage.getInstance().getReference();
     }
 
     @Override
@@ -140,45 +95,48 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem menuItem){
-        if (menuItem.getItemId() == R.id.icon_logout){
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        if (menuItem.getItemId() == R.id.action_logout) {
             AuthUI.getInstance().signOut(MainActivity.this).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()){
-                        Toast.makeText(MainActivity.this,"Sucessfully Signed out.",Toast.LENGTH_SHORT).show();
+                    if (task.isSuccessful()) {
+                        Toast.makeText(MainActivity.this, "Sucessfully Signed out.", Toast.LENGTH_SHORT).show();
                         signOut();
                     }
                 }
             });
         }
-        if (menuItem.getItemId()==R.id.icon_add){
-            Intent intent = new Intent(this,CadastrarReceita.class);
-            startActivity(intent);
-        }
         return true;
+    }
+
+    private List<Receita> carregaLista() {
+        List<Receita> lista = new ArrayList<Receita>();
+        lista.add(new Receita("Bolo de cenoura", "Bolos", "2 Ovos" + "\n" + "1/2 Xícara de Leite" + "\n" + "2 Colheres de fermento"));
+        lista.add(new Receita("Bolo de cenoura", "Bolos", "2 Ovos" + "\n" + "1/2 Xícara de Leite" + "\n" + "2 Colheres de fermento"));
+        lista.add(new Receita("Bolo de cenoura", "Bolos", "2 Ovos" + "\n" + "1/2 Xícara de Leite" + "\n" + "2 Colheres de fermento"));
+        lista.add(new Receita("Bolo de cenoura", "Bolos", "2 Ovos" + "\n" + "1/2 Xícara de Leite" + "\n" + "2 Colheres de fermento"));
+        return lista;
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-
-        if (currentUser == null){
+        if (currentUser == null) {
             signOut();
         }
     }
 
     private void signOut() {
-            Intent loginIntent = new Intent(this,LoginActivity.class);
-            loginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(loginIntent);
+        Intent loginIntent = new Intent(this, LoginActivity.class);
+        loginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(loginIntent);
     }
 }

@@ -5,7 +5,11 @@
     <string name="nav_header_title">Receitas Caseira</string>
     <string name="nav_header_subtitle">www.inf.ufg.br</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Configurações</string>
+    <string name="action_settings">Sair</string>
+
+    <string name="title_activity_receita">ReceitaActivity</string>
+    <string name="tab_text_1">Receita</string>
+    <string name="tab_text_2">Comentários</string>
 
     <string name="facebook_app_id">558294934652913</string>
     <string name="facebook_application_id">558294934652913</string>

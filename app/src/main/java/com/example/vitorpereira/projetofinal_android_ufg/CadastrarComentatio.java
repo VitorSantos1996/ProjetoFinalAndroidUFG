@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -27,14 +26,14 @@ import com.google.firebase.storage.UploadTask;
 import java.io.IOException;
 import java.util.UUID;
 
-public class CadastrarReceita extends AppCompatActivity {
+public class CadastrarComentatio extends AppCompatActivity {
 
 
     private Uri filePath;
     private final int PICK_IMAGE_REQUEST = 71;
     private ImageButton btnImageButton;
 
-    EditText nomeReceita, descricaoReceita;
+    EditText textoComentario, descricaoReceita;
 
     private StorageReference storageReference;
     private DatabaseReference databaseReference;
@@ -42,15 +41,13 @@ public class CadastrarReceita extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cadastrar_receita);
+        setContentView(R.layout.activity_cadastrar_comentario);
 
         Button btnCadastrar = (Button)findViewById(R.id.cpBtnCadastrar);
-        EditText nomeReceita = (EditText)findViewById(R.id.nomeReceita);
-        EditText descricaoReceita = (EditText)findViewById(R.id.descricaoReceita);
+        EditText textoComentario = (EditText) findViewById(R.id.txt_comentario_id);
         btnImageButton = (ImageButton) findViewById(R.id.btnImageButton);
 
-        nomeReceita.setOnClickListener(onClickView);
-        descricaoReceita.setOnClickListener(onClickView);
+        textoComentario.setOnClickListener(onClickView);
         btnCadastrar.setOnClickListener(onClickView);
 
         btnImageButton.setOnClickListener(onClickView);
@@ -67,37 +64,33 @@ public class CadastrarReceita extends AppCompatActivity {
 
         public void onClick(View view){
 
-            nomeReceita = findViewById(R.id.nomeReceita);
-            descricaoReceita = findViewById(R.id.descricaoReceita);
+            textoComentario = findViewById(R.id.txt_comentario_id);
 
-            String nome = nomeReceita.getText().toString();
-            String descricao = descricaoReceita.getText().toString();
+            String comentario = textoComentario.getText().toString();
 
             switch (view.getId()) {
                 case R.id.cpBtnCadastrar: {
-                    if (nome.equals("") || descricao.equals("")) {
+                    if (comentario.equals("")) {
                         valida();
                     } else {
-                        Receita receita = new Receita();
+                        Comentario novoComentario = new Comentario();
 
                         String uId = UUID.randomUUID().toString();
 
-                        receita.setuId(uId);
-                        receita.setNomeReceita(nome);
-                        receita.setDescricaoReceita(descricao);
+                        novoComentario.setuId(uId);
+                        novoComentario.setTextoComentario(comentario);
 
-                        databaseReference.child("Receitas").child(receita.getuId()).setValue(receita);
+                        databaseReference.child("Comentarios").child(novoComentario.getuId()).setValue(novoComentario);
 
                         uploadImage(uId);
 
-                        Toast.makeText(getApplicationContext(), "Adicionado com Sucesso", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Comentário adicionado com sucesso!", Toast.LENGTH_SHORT).show();
 
                         limpaCampos();
                     }
                     break;
                 }
                 case R.id.btnImageButton:{
-
                     Intent intent = new Intent();
                     intent.setType("image/*");
                     intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -139,14 +132,14 @@ public class CadastrarReceita extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             simpleProgressBar.setVisibility(View.GONE);
-                            Toast.makeText(CadastrarReceita.this, "Uploaded", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CadastrarComentatio.this, "Uploaded", Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             simpleProgressBar.setVisibility(View.GONE);
-                            Toast.makeText(CadastrarReceita.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CadastrarComentatio.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -162,20 +155,19 @@ public class CadastrarReceita extends AppCompatActivity {
     }
 
     private void limpaCampos() {
-        nomeReceita.setText("");
-        descricaoReceita.setText("");
+        textoComentario.setText("");
     }
 
     private void valida() {
 
-        String nome = nomeReceita.getText().toString();
+        String nome = textoComentario.getText().toString();
         String descricao = descricaoReceita.getText().toString();
 
         if (nome.equals("")) {
-            nomeReceita.setError("Campo requerido");
+            textoComentario.setError("Campo requerido");
         }
         if (descricao.equals("")) {
-            nomeReceita.setError("Campo requerido");
+            textoComentario.setError("Campo requerido");
         }
     }
 }

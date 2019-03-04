@@ -4,18 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CadastrarReceita">
+    tools:context=".CadastrarComentatio">
 
     <TextView
         android:id="@+id/cpNome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
-        android:text="CADASTRAR PRODUTO"
-        android:textColor="@android:color/black"
-        android:textSize="30dp"
+        android:text="Novo Comentário"
+        android:textColor="@color/fui_bgGitHub"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,50 +25,55 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:text="Adicione a foto da sua receita aqui"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cpNome" />
+
     <ImageButton
         android:id="@+id/btnImageButton"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textFoto"
         tools:srcCompat="@tools:sample/avatars" />
 
     <EditText
-        android:id="@+id/nomeReceita"
+        android:id="@+id/txt_comentario_id"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="93dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="36dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
-        android:hint="Nome Receita"
+        android:hint="Seu comentário"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnImageButton" />
 
-    <EditText
-        android:id="@+id/descricaoReceita"
+    <Button
+        android:id="@+id/cpBtnCadastrar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:hint="Descrição"
-        android:inputType="textMultiLine"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/com_facebook_button_send_background"
+        android:text="Cadastrar"
+        android:textColor="@color/browser_actions_bg_grey"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nomeReceita" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -82,20 +87,5 @@
         app:layout_constraintBottom_toTopOf="@+id/cpBtnCadastrar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/cpBtnCadastrar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Cadastrar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-
-
 
 </android.support.constraint.ConstraintLayout>

@@ -1,65 +1,70 @@
 package com.example.vitorpereira.projetofinal_android_ufg;
 
-public class Receita {
+import java.io.Serializable;
 
-    private String uId;
-    private String nomeReceita;
-    private String descricaoReceita;
-    private int imagem;
-    private String urlImagem;
+public class Receita implements Serializable {
+
+    private String nome;
+    private String ingredientes;
+    private String tempoDePreparo;
+    private String categoria;
+    private String imagem;
+    private int qtdPorcoes;
 
     public Receita() {
     }
 
-    @Override
-    public String toString() {
-        return "Receita{" +
-                "uId='" + uId + '\'' +
-                ", nomeReceita='" + nomeReceita + '\'' +
-                ", descricaoReceita='" + descricaoReceita + '\'' +
-                ", imagem=" + imagem +
-                ", urlImagem='" + urlImagem + '\'' +
-                '}';
+    public Receita(String nome, String categoria, String ingredientes) {
+        this.nome = nome;
+        this.categoria = categoria;
+        this.ingredientes = ingredientes;
     }
 
-    public String getuId() {
-        return uId;
+    public String getNome() {
+        return nome;
     }
 
-    public void setuId(String uId) {
-        this.uId = uId;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public String getNomeReceita() {
-        return nomeReceita;
+    public String getIngredientes() {
+        return ingredientes;
     }
 
-    public void setNomeReceita(String nomeReceita) {
-        this.nomeReceita = nomeReceita;
+    public void setIngredientes(String ingredientes) {
+        this.ingredientes = ingredientes;
     }
 
-    public String getDescricaoReceita() {
-        return descricaoReceita;
+    public String getTempoDePreparo() {
+        return tempoDePreparo;
     }
 
-    public void setDescricaoReceita(String descricaoReceita) {
-        this.descricaoReceita = descricaoReceita;
+    public void setTempoDePreparo(String tempoDePreparo) {
+        this.tempoDePreparo = tempoDePreparo;
     }
 
-    public int getImagem() {
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public String getImagem() {
         return imagem;
     }
 
-    public void setImagem(int imagem) {
+    public void setImagem(String imagem) {
         this.imagem = imagem;
     }
 
-    public String getUrlImagem() {
-        return urlImagem;
+    public int getQtdPorcoes() {
+        return qtdPorcoes;
     }
 
-    public void setUrlImagem(String urlImagem) {
-        this.urlImagem = urlImagem;
+    public void setQtdPorcoes(int qtdPorcoes) {
+        this.qtdPorcoes = qtdPorcoes;
     }
 }
-

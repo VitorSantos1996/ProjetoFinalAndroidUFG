@@ -13,15 +13,15 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
-public class ArrayAdapterReceita extends ArrayAdapter<Receita> {
+public class ComentarioAdapter extends ArrayAdapter<Comentario> {
 
     private final Context context;
-    private final List<Receita> elementos;
+    private final List<Comentario> elementos;
 
     private StorageReference storageReference;
 
-    public ArrayAdapterReceita(Context context, List<Receita> elementos) {
-        super(context,R.layout.list_receitas,elementos);
+    public ComentarioAdapter(Context context, List<Comentario> elementos) {
+        super(context, R.layout.item_comentario, elementos);
         this.context = context;
         this.elementos = elementos;
     }
@@ -29,20 +29,18 @@ public class ArrayAdapterReceita extends ArrayAdapter<Receita> {
     @Override
     public View getView(int position,  View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout.list_receitas, parent, false);
+        View rowView = inflater.inflate(R.layout.item_comentario, parent, false);
 
         storageReference = FirebaseStorage.getInstance().getReference();
         StorageReference imageStorage = storageReference.child("imagens/"+elementos.get(position).getuId());
 
-        ImageView imagem = (ImageView) rowView.findViewById(R.id.imageHome);
-        TextView nomeReceita = (TextView) rowView.findViewById(R.id.nomeReceitaHome);
-        TextView descricaoReceita = (TextView) rowView.findViewById(R.id.descricaoReceitaHome);
+        ImageView imagem = (ImageView) rowView.findViewById(R.id.imageComment);
+        TextView textoComentario = (TextView) rowView.findViewById(R.id.txt_nomeusuario_id);
 
         GlideApp.with(getContext()).load(imageStorage).into(imagem);
 
         imagem.setImageResource(elementos.get(position).getImagem());
-        nomeReceita.setText(elementos.get(position).getNomeReceita());
-        descricaoReceita.setText(elementos.get(position).getDescricaoReceita());
+        textoComentario.setText(elementos.get(position).getTextoComentario());
 
         return rowView;
     }

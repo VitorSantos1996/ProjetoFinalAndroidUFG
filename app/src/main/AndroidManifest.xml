@@ -13,8 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".CadastrarComentatio"></activity>
-        <activity android:name=".DetalheReceitaActivity"></activity>
-        <activity android:name=".ComentarioActivity" />
         <activity android:name=".ReceitaActivity"></activity>
         <activity
             android:name=".MainActivity"

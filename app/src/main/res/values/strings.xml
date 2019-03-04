@@ -1,5 +1,11 @@
 <resources>
-    <string name="app_name">Receitas Caseiras</string>
+    <string name="app_name">Receitas Caseira</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Receitas Caseira</string>
+    <string name="nav_header_subtitle">www.inf.ufg.br</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Configurações</string>
 
     <string name="facebook_app_id">558294934652913</string>
     <string name="facebook_application_id">558294934652913</string>
